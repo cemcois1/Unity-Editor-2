@@ -24,7 +24,7 @@ public class EditorControlCode : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(ray.origin, ray.direction * 200, out hit);
         Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 3, false);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0)&&hit.transform.gameObject.CompareTag("Background"))
         {
             sakla = hit.collider.gameObject.GetComponent<Renderer>();
             sakla.material.SetColor("_Color", Color.red);
