@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EditorControlCode : MonoBehaviour
 {
@@ -17,19 +16,26 @@ public class EditorControlCode : MonoBehaviour
      * bu ikisi arasında ray çiz ve raycasthit al
      * raycasthit in adını yazdır
      */
-    public Collider2D baslangic;
-    Physics2DRaycaster dRaycaster;
-    RaycastHit2D raycastHit;
+
+    Renderer sakla;
     void Update()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit raycast;
-        Physics.Raycast(ray.origin, ray.direction*200,out raycast);
-        Debug.DrawRay(ray.origin, ray.direction*20,Color.red,3,false);
-        Debug.Log(raycastHit.collider.name);
-    }
-    private void OnMouseOver()
-    {
-        print("deneme");
+        RaycastHit hit;
+        Physics.Raycast(ray.origin, ray.direction * 200, out hit);
+        Debug.DrawRay(ray.origin, ray.direction * 20, Color.red, 3, false);
+        if (Input.GetMouseButtonDown(0))
+        {
+            sakla = hit.collider.gameObject.GetComponent<Renderer>();
+            sakla.material.SetColor("_Color", Color.red);
+            Debug.Log(hit.collider.name);
+            Vector3.Lerp(hit.collider.gameObject.transform.position, Input.mousePosition,1);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            sakla.material.SetColor("_Color", Color.white);
+            print("girdi");
+
+        }
     }
 }
